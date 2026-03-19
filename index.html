@@ -4,52 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Herman Miller POS Agent</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            text-align: center;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-    </style>
 </head>
 <body>
-
-    <div class="container">
-        <h1>Herman Miller Service Portal</h1>
-        <p>The Agentforce Service Agent is active on this page.</p>
-        <p>Click the chat icon in the bottom right to begin.</p>
-    </div>
 
     <script type='text/javascript'>
         function initEmbeddedMessaging() {
             try {
-                embeddedservice_bootstrap.settings.language = 'en_US'; 
-
-                embeddedservice_bootstrap.init(
-                    '00DHu00000ytxGz',
-                    'SDO_Messaging_for_Web',
-                    'https://storm-742f01096cd379.my.site.com/ESWSDOMessagingforWeb1773340509111',
-                    {
-                        scrt2URL: 'https://storm-742f01096cd379.my.salesforce-scrt.com'
-                    }
-                );
+                // Ensure the bootstrap object exists before calling init
+                if (typeof embeddedservice_bootstrap !== 'undefined') {
+                    embeddedservice_bootstrap.settings.language = 'en_US';
+                    embeddedservice_bootstrap.init(
+                        '00DHu00000ytxGz',
+                        'SDO_Messaging_for_Web',
+                        'https://storm-742f01096cd379.my.site.com/ESWSDOMessagingforWeb1773340509111',
+                        {
+                            scrt2URL: 'https://storm-742f01096cd379.my.salesforce-scrt.com'
+                        }
+                    );
+                } else {
+                    console.log('Bootstrap not ready, retrying in 500ms...');
+                    setTimeout(initEmbeddedMessaging, 500);
+                }
             } catch (err) {
                 console.error('Error loading Embedded Messaging: ', err);
             }
         };
     </script>
-    <script type='text/javascript' src='https://storm-742f01096cd379.my.site.com/ESWSDOMessagingforWeb1773340509111/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+
+    <script 
+        type='text/javascript' 
+        src='https://storm-742f01096cd379.my.site.com/ESWSDOMessagingforWeb1773340509111/assets/js/bootstrap.min.js' 
+        async 
+        onload='initEmbeddedMessaging()'>
+    </script>
 
 </body>
 </html>
